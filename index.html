@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>微信分享示例</title>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=0"
+    />
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+  </head>
+  <body>
+    <h1>分享测试页面</h1>
+    <div id="shareContent">这是要分享的内容</div>
+
+    <script>
+      // 注入微信配置
+      wx.config({
+        debug: true, // 开启调试模式
+        appId: 'wx12345678', // 替换为你的公众号 appId
+        timestamp: String(Math.floor(Date.now() / 1000)),
+        nonceStr: 'randomstring', // 可以是任意字符串
+        signature: 'test_signature', // 在开发环境可以暂时使用固定值
+        jsApiList: [
+          // 必填，需要使用的JS接口列表
+          'updateAppMessageShareData', // 分享到朋友圈
+          'updateTimelineShareData', // 分享给朋友
+        ],
+      });
+
+      // 配置分享信息
+      wx.ready(function () {
+        // 分享给朋友
+        wx.updateAppMessageShareData({
+          title: '这是分享标题',
+          desc: '这是分享描述文本',
+          link: 'https://你的域名.com/分享页面', // 替换为你的实际链接
+          imgUrl: 'https://你的域名.com/分享图片.jpg', // 替换为你的实际图片链接
+          success: function () {
+            alert('分享设置成功');
+          },
+        });
+
+        // 分享到朋友圈
+        wx.updateTimelineShareData({
+          title: '这是分享标题',
+          link: 'https://你的域名.com/分享页面', // 替换为你的实际链接
+          imgUrl: 'https://你的域名.com/分享图片.jpg', // 替换为你的实际图片链接
+          success: function () {
+            alert('分享设置成功');
+          },
+        });
+      });
+
+      wx.error(function (res) {
+        console.error('微信配置错误:', res);
+      });
+    </script>
+  </body>
+</html>
